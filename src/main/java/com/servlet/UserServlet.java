@@ -31,11 +31,19 @@ public class UserServlet extends HttpServlet {
 
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html;UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		AdminInfo ad=null;
+		String sql =null;
+		request.setCharacterEncoding("UTF-8");
 		String user =request.getParameter("userName");
 		String pass =request.getParameter("password");
-		String sql = "select * from admininfo where adminName = ? and password = ?";
-		AdminInfo ad = DBUtil.getObj(sql, AdminInfo.class, user,pass);
+		if("".equals(user)||"".equals(pass)) {
+			response.getWriter().print("1");
+		}else {
+			sql = "select * from admininfo where adminName = ? and password = ?";
+			ad = DBUtil.getObj(sql, AdminInfo.class, user,pass);
+		}
+		
 		
 		if(ad==null) {
 			response.getWriter().print("1");

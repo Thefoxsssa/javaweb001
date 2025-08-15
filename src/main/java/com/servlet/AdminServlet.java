@@ -1,6 +1,8 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +22,27 @@ public class AdminServlet extends HttpServlet {
 		String flag =request.getParameter("flag");
 		if("add".equals(flag)) {
 			add(request,response);
+		}else if("manage".equals(flag)) {
+			manage(request,response);
+		}else if("newPass".equals(flag)) {
+			newpass(request,response);
 		}
+	}
+
+
+	private void newpass(HttpServletRequest request, HttpServletResponse response) {
+		String admin =request.getParameter("adminName");
+		String newpass =request.getParameter("newPassword");
+		AdminDao dao =new AdminDao();
+		dao.updatapass(admin,newpass);
+	}
+
+
+	private void manage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		AdminDao ad = new AdminDao();
+		List<AdminInfo> list=ad.getAdmin();
+		request.setAttribute("AdminList", list);
+		request.getRequestDispatcher("admin/admin_manage.jsp").forward(request, response);
 	}
 
 
@@ -36,6 +58,7 @@ public class AdminServlet extends HttpServlet {
 		ai.setState(1);
 		AdminDao ad = new AdminDao();
 		ad.addAdmin(ai);
+		
 	}
 
 }

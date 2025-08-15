@@ -28,66 +28,71 @@
 					});	
 			});		
 	</script>
-		
 	<script>
-	$(function(){
+   
+    function admin() {
+        var str = $("#adminName").val();
+        var reg = /^[a-zA-Z0-9]{4,15}$/;
+        if (!reg.test(str)) {
+            $("#adminName_msg").text("用户名格式错误").css("color", "red");
+            return false;
+        } else {
+            $("#adminName_msg").text("正确").css("color", "green");
+            return true;
+        }
+    }
 
-	  $("#adminName").keyup(function(){
-	    var str = $(this).val();
-	    var reg = /^[a-zA-Z0-9]{4,15}$/;
-	    if (!reg.test(str)) {
-	      $("#adminName_msg").text("用户名格式错误").css("color", "red");
-	      return false;
-	    } else {
-	      $("#adminName_msg").text("正确").css("color", "green");
-	      return true;
-	    }
-	  });
-	
+    function pass() {
+        var str = $("#password").val();
+        var ss = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        if (str !== ss) {
+            $("#password_msg").text("请输入正确的字符").css("color", "red");
+            return false;
+        } else if (ss.length < 6 || ss.length > 20) {
+            $("#password_msg").text("密码长度不能少于6位或大于20位").css("color", "red");
+            return false;
+        } else {
+            $("#password_msg").text("正确").css("color", "green");
+            return true;
+        }
+    }
 
-	  $("#password").keyup(function(){
-	    var str = $(this).val();
-	    var ss = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-	    if (str !== ss) {
-	      $("#password_msg").text("请输入正确的字符").css("color", "red");
-	      return false;
-	    } else if (ss.length < 6 || ss.length > 20) {
-	      $("#password_msg").text("密码长度不能少于6位或大于20位").css("color", "red");
-	      return false;
-	    } else {
-	      $("#password_msg").text("正确").css("color", "green");
-	      return true;
-	    }
-	  });
-	
+    function passagein() {
+        var pwd = $("#password").val();
+        var confirm = $("#pwdconfirm").val();
+        if (pwd !== confirm) {
+            $("#pwdconfirm_msg").text("密码不一致").css("color", "red");
+            return false;
+        } else {
+            $("#pwdconfirm_msg").text("一致").css("color", "green");
+            return true;
+        }
+    }
 
-	  $("#pwdconfirm").keyup(function(){
-	    var pwd = $("#password").val();
-	    var confirm = $(this).val();
-	    if (pwd !== confirm) {
-	      $("#pwdconfirm_msg").text("密码不一致").css("color", "red");
-	      return false;
-	    } else {
-	      $("#pwdconfirm_msg").text("一致").css("color", "green");
-	      return true;
-	    }
-	  });
-	
-	  $("form").submit(function(){
-	    var nameValid = /^[a-zA-Z0-9]{4,15}$/.test($("#adminName").val());
-	    var pwd = $("#password").val();
-	    var pwdValid = /^[a-zA-Z0-9]{6,20}$/.test(pwd);
-	    var confirmValid = pwd === $("#pwdconfirm").val();
-	
-	    if (!nameValid || !pwdValid || !confirmValid) {
-	      $("#result_msg").text("请检查输入项是否正确！").css("color", "red");
-	      return false; 
-	    }
-	    return true; 
-	  });
-	});
-	</script>
+    
+    $(function() {
+        $("#adminName").keyup(admin);
+        $("#password").keyup(pass);
+        $("#pwdconfirm").keyup(passagein);
+    });
 
+    // 表单提交验证函数
+    function Fsub() {
+        var userKey = admin();
+        var passKey = pass();
+        var passAgainKey = passagein();
+
+        if (userKey && passKey && passAgainKey) {
+            alert("提交成功");
+            return true;
+        } else {
+            alert("验证失败");
+            return false;
+        }
+    }
+</script>
+	
+	
 	
   </head>
   
@@ -96,7 +101,7 @@
 		 <div class="div_titlename"> <img src="images/san_jiao.gif" ><span>管理员添加</span></div>
 	 </div>
 				 
-	 <form action="AdminServlet?flag=add" method="post" >
+	 <form action="AdminServlet?flag=add" method="post" onsubmit="return Fsub()">
 		 <table class="edit_table" >
 		 		<tr>
 		 			 	<td class="td_info">用户账号:</td>	
@@ -136,5 +141,10 @@
 		 		</tr>
 		</table>
      </form>
+     
+     
+     
+     
+     
   </body>
 </html>

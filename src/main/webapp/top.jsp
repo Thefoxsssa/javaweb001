@@ -1,8 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <title></title>  
-
+    <base href="${pageContext.request.contextPath }/">    
+	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/top.css" ></link>
 	<script type="text/javascript" src="js/jquery-1.8.0.js"></script>
   </head>
@@ -13,7 +16,7 @@
 		   			<td id="td1" ></td>
 		   			<td id="td2">&nbsp;</td>
 		   			<td id="td3">
-		   				<a id="td3_a1"  target="centerFrame" href="/admin/password_edit.jsp"><img src="images/btn_head_bg1.jpg"/>修改密码</a>
+		   				<a id="td3_a1"  target="centerFrame" href="admin/password_edit.jsp"><img src="images/btn_head_bg1.jpg"/>修改密码</a>
 		   				<a  target="centerFrame" href="admin/admin_info.jsp"><img src="images/btn_head_bg1.jpg"/>用户信息</a>
 		   				<a href="javascript:void(0)"><img src="images/btn_head_bg1.jpg"/>退出系统</a>
 		   			</td>
@@ -29,7 +32,6 @@
 							
 						<td id="bar_td3">
 							 商城后台管理系统</td>
-					
 					</tr>
 			</table>
 			<table id="t_title">
@@ -40,7 +42,7 @@
 							<td id="title_td2"><img src="images/main_29.gif" /></td>	
 							<td id="title_td3"><img src="images/main_30.gif" /></td>	
 							<td id="title_td4">&nbsp;
-									<label class="admininfo">当前登录用户:  用户状态  : 正常
+									<label class="admininfo">当前登录用户: ${sessionScope.session_admin.adminName } 用户状态  : 正常
 								</label>
 							</td>	
 							<td id="title_td5"><img src="images/main_32.gif" /></td>
@@ -48,3 +50,4 @@
 			</table>
   </body>
 </html>
+

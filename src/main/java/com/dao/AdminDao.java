@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.sql.*;
+import java.util.List;
 
 import com.beans.AdminInfo;
 import com.jdbc.DBUtil;
@@ -30,5 +31,34 @@ public class AdminDao {
 		}
 		
 	}
-	
+	public List<AdminInfo> getAdmin() {
+		Connection conn=null;
+		String sql = "select * from admininfo";
+		try {
+			conn=DBUtil.getDBUtil();
+			List<AdminInfo> list =  DBUtil.getObjs(sql, AdminInfo.class);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}finally {
+			DBUtil.close(conn, null, null);
+		}
+		
+	}
+
+	public void updatapass(String admin, String newpass) {
+		Connection conn=null;
+		String sql = "UPDATE admininfo set password = ? where adminName = ?";
+		try {
+			conn=DBUtil.getDBUtil();
+			DBUtil.upData(sql,newpass, admin);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}finally {
+			DBUtil.close(conn, null, null);
+		}
+		
+	}
 }
