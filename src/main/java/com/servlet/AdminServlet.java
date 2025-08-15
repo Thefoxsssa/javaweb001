@@ -35,6 +35,7 @@ public class AdminServlet extends HttpServlet {
 		String newpass =request.getParameter("newPassword");
 		AdminDao dao =new AdminDao();
 		dao.updatapass(admin,newpass);
+		request.getSession().invalidate();
 	}
 
 
